@@ -203,7 +203,7 @@ def feedback_new():
         fid=None
         if request.files.get('video') and request.files['video'].filename: fid=save_file(cid,'Video feedback',request.files['video'])
         c=get_db(); c.execute('INSERT INTO feedback(client_id,kind,text,file_id,created_at) VALUES(?,?,?,?,?)',(cid,request.form['kind'],request.form.get('text'),fid,now())); c.commit(); c.close(); return redirect(url_for('client',cid=cid))
-    return render_template('feedback.html',cid=cid)
+    return render_template('feedback_new.html',cid=cid)
 
 @app.route('/reports')
 @auth
