@@ -143,7 +143,7 @@ def client(cid):
 def form(): return render_template('form.html',questions=QUESTIONS)
 @app.route('/form/submit',methods=['POST'])
 def form_submit():
-    if not request.form.get('full_name','').strip() or not request.form.get('phone','').strip(): return render_template('thanks.html',error='Please go back and enter your name and phone number.')
+    if not request.form.get('full_name','').strip() or not request.form.get('phone_number','').strip(): return render_template('thanks.html',error='Please go back and enter your name and phone number.')
     answers={}
     for sec,q,typ,opts,req in QUESTIONS:
         key=q.lower().replace(' ','_').replace('/','_')
@@ -151,7 +151,7 @@ def form_submit():
         if vals: answers[q]=vals if len(vals)>1 else vals[0]
         other=request.form.get(key+'_other','').strip()
         if other: answers[q+' — Other']=other
-    c=get_db(); code='HC-'+secrets.token_hex(4).upper(); c.execute('INSERT INTO clients(client_code,name,phone,email,city,age,gender,status,created_at) VALUES(?,?,?,?,?,?,?,?,?)',(code,request.form.get('full_name'),request.form.get('phone'),request.form.get('email'),request.form.get('city'),request.form.get('age') or None,request.form.get('gender'),'New Intake',now())); cid=c.execute('SELECT last_insert_rowid()').fetchone()[0]; c.execute('INSERT INTO submissions(client_id,submitted_at,answers_json) VALUES(?,?,?)',(cid,now(),json.dumps(answers,ensure_ascii=False))); c.commit(); c.close(); return render_template('thanks.html')
+    c=get_db(); code='HC-'+secrets.token_hex(4).upper(); c.execute('INSERT INTO clients(client_code,name,phone,email,city,age,gender,status,created_at) VALUES(?,?,?,?,?,?,?,?,?)',(code,request.form.get('full_name'),request.form.get('phone_number'),request.form.get('email'),request.form.get('city'),request.form.get('age') or None,request.form.get('gender'),'New Intake',now())); cid=c.execute('SELECT last_insert_rowid()').fetchone()[0]; c.execute('INSERT INTO submissions(client_id,submitted_at,answers_json) VALUES(?,?,?)',(cid,now(),json.dumps(answers,ensure_ascii=False))); c.commit(); c.close(); return render_template('thanks.html')
 
 @app.route('/submission/<int:sid>')
 @auth
