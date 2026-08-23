@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="card">
+    <h2>Add Feedback</h2>
+
+    <form method="post" enctype="multipart/form-data">
+        <input type="hidden" name="_csrf" value="{{ csrf }}">
+
+        <label>Feedback type</label>
+        <select name="kind" required>
+            <option value="General feedback">General feedback</option>
+            <option value="Progress feedback">Progress feedback</option>
+            <option value="Diet feedback">Diet feedback</option>
+            <option value="Exercise feedback">Exercise feedback</option>
+            <option value="Other">Other</option>
+        </select>
+
+        <label>Feedback / coach notes</label>
+        <textarea name="text" rows="6" placeholder="Write your feedback here..."></textarea>
+
+        <label>Attach video (optional)</label>
+        <input type="file" name="video" accept=".mp4,.mov,.webm">
+
+        <button class="primary" type="submit">Save Feedback</button>
+    </form>
+</div>
+{% endblock %}
