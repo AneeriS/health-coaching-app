@@ -1,0 +1,1 @@
+{% extends 'base.html' %}{% block content %}<div class="card">{% for r in rows %}<div class="feedback"><b>{{r.name}} — {{r.kind}}</b><small>{{r.created_at}}</small><p>{{r.text or 'Video/file feedback'}}</p>{% if r.file_id %}<a href="/file/{{r.file_id}}">Open attached file</a>{% endif %}</div>{% else %}<p class="muted">No feedback yet.</p>{% endfor %}</div>{% endblock %}

@@ -1,0 +1,1 @@
+{% extends 'base.html' %}{% block content %}<div class="card">{% for f in files %}<a class="listrow" href="/file/{{f.id}}"><span><b>{{f.original_name}}</b><small>{{f.name}} · {{f.category}} · {{f.uploaded_at}}</small></span><em>Open</em></a>{% else %}<p class="muted">No files yet.</p>{% endfor %}</div>{% endblock %}
